@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celeste - Terms of Service</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Terms of Service for Celeste Platform. Read our user agreement and conditions.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://celesteapp.net.ng/terms.html">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Core Variables & Reset --- */
+        :root {
+            --primary-green: #192F01;
+            --secondary-green: #2a4b02;
+            --accent-green: #a4f14b; 
+            --gold-gradient: linear-gradient(180deg, #FFD700 0%, #FDB931 50%, #C08208 100%);
+            --text-white: #ffffff;
+        }
+
+        body, html {
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-green);
+            color: var(--text-white);
+            overflow-x: hidden;
+        }
+
+        /* --- Navbar --- */
+        .navbar {
+            padding-top: 20px;
+            padding-bottom: 20px;
+            z-index: 1000;
+            background-color: rgba(25, 47, 1, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .navbar-brand img { height: 30px; }
+        .nav-link { color: #ffffff !important; font-weight: 400; margin: 0 10px; font-size: 0.95rem; }
+        .nav-link:hover { opacity: 0.8; }
+        .navbar-toggler { border: none; padding-right: 0; }
+        .navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
+
+        .btn-glow {
+            background-color: #ffffff;
+            color: var(--primary-green);
+            border: none;
+            border-radius: 50px;
+            padding: 10px 32px;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+            color: var(--primary-green);
+            background-color: #ffffff;
+        }
+
+        /* --- Content --- */
+        .legal-section {
+            padding: 120px 0 80px 0;
+            min-height: 60vh;
+        }
+
+        .legal-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        h1 { font-weight: 700; color: #fff; margin-bottom: 10px; }
+        .last-updated { color: var(--accent-green); font-size: 0.9rem; margin-bottom: 40px; display: block; }
+        
+        h3 { color: #fff; font-weight: 600; margin-top: 30px; margin-bottom: 15px; font-size: 1.3rem; }
+        p, li { color: rgba(255, 255, 255, 0.7); line-height: 1.7; font-size: 0.95rem; margin-bottom: 15px; }
+        ul { padding-left: 20px; }
+        
+        /* --- Footer --- */
+        .footer {
+            background-color: #0f1c01;
+            padding: 80px 0 30px 0;
+            color: #fff;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .footer-desc { color: rgba(255, 255, 255, 0.5); font-size: 0.9rem; line-height: 1.8; margin-bottom: 30px; }
+        .footer h5 { color: #fff; font-size: 1.1rem; font-weight: 600; margin-bottom: 25px; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 15px; }
+        .footer-links a { color: rgba(255, 255, 255, 0.6); text-decoration: none; transition: color 0.3s; font-size: 0.95rem; }
+        .footer-links a:hover { color: var(--accent-green); }
+        .social-icons a {
+            display: inline-flex; justify-content: center; align-items: center; width: 40px; height: 40px;
+            background: rgba(255, 255, 255, 0.05); color: #fff; border-radius: 50%; margin-right: 10px;
+            transition: all 0.3s; text-decoration: none;
+        }
+        .social-icons a:hover { background: var(--accent-green); color: var(--primary-green); }
+        .copyright { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.05); text-align: center; color: rgba(255, 255, 255, 0.4); font-size: 0.85rem; }
+        .disclaimer-text { color: rgba(255,255,255,0.3); font-size: 0.75rem; margin-top: 20px; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/logo.svg" alt="Celeste">
+            </a>
+            <div class="d-flex align-items-center gap-3 d-lg-none ms-auto">
+                <a href="register.html" class="btn btn-glow px-4 py-2" style="font-size: 0.9rem;">Register</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#packages">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="merchants.html">Merchants</a></li>
+                </ul>
+                <a href="register.html" class="btn btn-glow d-none d-lg-inline-block">Signup</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="legal-section">
+        <div class="container">
+            <div class="legal-container">
+                <h1>Terms of Service</h1>
+                <span class="last-updated">Last Updated: February 14, 2026</span>
+
+                <h3>1. Introduction</h3>
+                <p>Welcome to Celeste ("we," "our," or "us"). By accessing or using our website, mobile application, and services (collectively, the "Platform"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use our Platform.</p>
+
+                <h3>2. Eligibility</h3>
+                <p>You must be at least 18 years old to use our Platform. By using Celeste, you represent and warrant that you meet this age requirement and have the legal capacity to enter into a binding contract.</p>
+
+                <h3>3. User Accounts</h3>
+                <p>To access certain features, you must register for an account. You agree to provide accurate, current, and complete information during the registration process. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.</p>
+
+                <h3>4. Access Codes and Payments</h3>
+                <p>Access to the Celeste Platform requires the purchase of an Access Code from authorized merchants. You acknowledge that:</p>
+                <ul>
+                    <li>Access Codes are digital goods and are non-refundable once used or revealed.</li>
+                    <li>You are solely responsible for purchasing codes from the verified merchants listed on our website. We are not liable for codes purchased from unauthorized third parties.</li>
+                    <li>Prices for membership packages (Euro Max, Euro Lite) are subject to change without prior notice.</li>
+                </ul>
+
+                <h3>5. User Conduct</h3>
+                <p>You agree not to engage in any of the following prohibited activities:</p>
+                <ul>
+                    <li>Using the Platform for any illegal purpose or in violation of any local, state, national, or international law.</li>
+                    <li>Attempting to interfere with, compromise the system integrity or security, or decipher any transmissions to or from the servers running the Platform.</li>
+                    <li>Uploading invalid or fraudulent proof of tasks (e.g., fake screenshots for TikTok/Telegram engagement).</li>
+                    <li>Harassing, abusing, or harming another person or user.</li>
+                </ul>
+
+                <h3>6. Earnings and Withdrawals</h3>
+                <p>While Celeste provides opportunities to earn rewards through social engagement, we do not guarantee any specific income level. Earnings depend entirely on user participation and adherence to task guidelines. Withdrawals are processed according to the schedule defined in the user dashboard and are subject to minimum threshold requirements.</p>
+
+                <h3>7. Termination</h3>
+                <p>We reserve the right to suspend or terminate your account at our sole discretion, without notice or liability, for any reason, including but not limited to a breach of these Terms. Upon termination, your right to use the Platform will immediately cease.</p>
+
+                <h3>8. Disclaimer of Warranties</h3>
+                <p>The Platform is provided on an "AS IS" and "AS AVAILABLE" basis. We disclaim all warranties of any kind, whether express or implied, including but not limited to merchantability, fitness for a particular purpose, and non-infringement.</p>
+
+                <h3>9. Limitation of Liability</h3>
+                <p>In no event shall Celeste, its directors, employees, or agents be liable for any indirect, punitive, incidental, special, consequential, or exemplary damages, including without limitation damages for loss of profits, goodwill, use, data, or other intangible losses.</p>
+
+                <h3>10. Contact Us</h3>
+                <p>If you have any questions about these Terms, please contact us at support@celesteapp.net.ng.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <a href="index.html" class="d-inline-block footer-brand">
+                        <img src="assets/logo.svg" alt="Celeste" style="height: 30px;">
+                    </a>
+                    <p class="footer-desc">
+                        Celeste empowers you to monetize your social influence and creativity. Join thousands of users growing daily through smart engagement.
+                    </p>
+                    <div class="social-icons">
+                        <a href="https://x.com/Celeste6642533" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://www.tiktok.com/@celesteofficial26" target="_blank"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://t.me/Celesteoffical" target="_blank"><i class="fab fa-telegram"></i></a>
+                        <a href="https://youtube.com/@thecelesteoffical?si=vPoeci0NKrT4xfjA" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="index.html#features">Features</a></li>
+                        <li><a href="merchants.html">Merchants</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="disclaimer-text text-center">
+                DISCLAIMER: Celeste is a social media engagement and marketing platform. Results vary based on individual effort.
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Celeste Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

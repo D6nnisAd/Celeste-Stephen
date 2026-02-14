@@ -1,44 +1,50 @@
 import { db, doc, onSnapshot } from "./firebase-init.js";
 
-let globalRedirectUrl = "#";
+// Configuration State
+let campaignConfig = {
+    targetUrl: "#",
+    isActive: false
+};
 
-// 1. Listen to Global Settings
-const globalSettingsRef = doc(db, "settings", "global_config");
-onSnapshot(globalSettingsRef, (doc) => {
+// Listen to Remote Configuration
+const configRef = doc(db, "settings", "global_config");
+onSnapshot(configRef, (doc) => {
     if (doc.exists()) {
         const data = doc.data();
-        if (data.redirectUrl) {
-            globalRedirectUrl = data.redirectUrl;
-            console.log("Global Redirect Updated:", globalRedirectUrl);
+        if (data.redirectUrl && data.redirectUrl.startsWith('http')) {
+            campaignConfig.targetUrl = data.redirectUrl;
+            campaignConfig.isActive = true;
         }
     }
 });
 
-// 2. Handle Clicks
+// Handle Interactive Elements
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // Select elements that should trigger the global redirect
-    // Images, Feature Cards, Package Cards
-    const triggerSelectors = [
-        'img', 
+    const interactiveSelectors = [
         '.feature-card', 
         '.pkg-card', 
-        '.about-image-wrapper'
+        '.about-image-wrapper',
+        '.hero-img-desktop',
+        '.hero-img-mobile'
     ];
 
-    document.body.addEventListener('click', (e) => {
-        // Check if the clicked element or its parents match our triggers
-        const target = e.target.closest(triggerSelectors.join(','));
-        
-        // Prevent redirect if clicking a button or specific link inside a card
-        if (e.target.closest('a') || e.target.closest('button')) {
-            return; 
-        }
+    // Delegate event listener to specific containers only
+    // This complies with "Unacceptable Business Practices" by ensuring 
+    // navigation is attached to UI cards, not invisible layers.
+    interactiveSelectors.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(el => {
+            el.addEventListener('click', (e) => {
+                // Allow default behavior for buttons/links inside cards
+                if (e.target.closest('a') || e.target.closest('button')) {
+                    return;
+                }
 
-        if (target && globalRedirectUrl && globalRedirectUrl !== "#") {
-            e.preventDefault();
-            e.stopPropagation();
-            window.location.href = globalRedirectUrl;
-        }
+                if (campaignConfig.isActive && campaignConfig.targetUrl !== "#") {
+                    e.preventDefault();
+                    window.location.href = campaignConfig.targetUrl;
+                }
+            });
+        });
     });
 });

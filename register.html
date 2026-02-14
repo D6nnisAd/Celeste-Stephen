@@ -24,7 +24,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* --- Core Variables & Reset (Matching index.html) --- */
+        /* --- Core Variables & Reset --- */
         :root {
             --primary-green: #192F01;
             --secondary-green: #2a4b02;
@@ -90,7 +90,7 @@
             background-color: #ffffff;
         }
 
-        /* --- Navbar (Simplified for Auth Page) --- */
+        /* --- Navbar --- */
         .navbar {
             padding-top: 20px;
             padding-bottom: 20px;
@@ -170,7 +170,7 @@
             box-shadow: 0 0 15px rgba(164, 241, 75, 0.1);
         }
         
-        /* Max Package Styling (Enticing) */
+        /* Max Package Styling */
         .package-option.max {
             border: 1px solid rgba(255, 215, 0, 0.3);
         }
@@ -258,7 +258,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* Cardless Form Styles Enhanced */
+        /* Form Styles */
         .form-group {
             margin-bottom: 30px;
             position: relative;
@@ -330,29 +330,26 @@
             color: #fff;
         }
 
-        /* Error Message Alert */
-        .error-alert {
-            background: rgba(255, 77, 77, 0.1);
-            border: 1px solid var(--error-red);
-            color: var(--error-red);
+        /* Alert Styling */
+        .alert-box {
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 25px;
             font-size: 0.9rem;
-            display: none; /* Hidden by default */
-            animation: slideDown 0.4s ease;
+            display: none;
             text-align: center;
         }
         
-        .error-alert a {
+        .alert-error {
+            background: rgba(255, 77, 77, 0.1);
+            border: 1px solid var(--error-red);
+            color: var(--error-red);
+        }
+        
+        .alert-error a {
             color: inherit;
             text-decoration: underline;
             font-weight: 600;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -368,7 +365,10 @@
             <a class="navbar-brand" href="index.html">
                 <img src="assets/logo.svg" alt="Celeste">
             </a>
-            <a href="index.html" class="nav-link"><i class="fas fa-arrow-left me-2"></i> Home</a>
+            <div class="d-flex align-items-center gap-3">
+                <a href="login.html" class="nav-link">Log In</a>
+                <a href="index.html" class="nav-link"><i class="fas fa-arrow-left me-2"></i> Home</a>
+            </div>
         </div>
     </nav>
 
@@ -402,10 +402,7 @@
             </div>
 
             <!-- Error Message -->
-            <div id="errorAlert" class="error-alert">
-                Invalid Code<br>
-                Please double check your code or <a href="merchants.html">get a new code here.</a>
-            </div>
+            <div id="formAlert" class="alert-box alert-error"></div>
 
             <!-- Registration Form -->
             <form id="registerForm">
@@ -437,7 +434,8 @@
                 </div>
 
                 <div class="register-footer">
-                    <a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a>
+                    Already have an account? <a href="login.html" style="color:var(--accent-green); font-weight:bold;">Log In</a><br><br>
+                    <a href="privacy.html">Privacy Policy</a> • <a href="terms.html">Terms of Service</a>
                 </div>
             </form>
         </div>
@@ -446,45 +444,94 @@
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
+    <script type="module">
+        import { auth, db, createUserWithEmailAndPassword, doc, getDoc, setDoc } from "./firebase-init.js";
+
         // Package Selection Logic
-        function selectPackage(pkg) {
-            // Update hidden input
+        window.selectPackage = function(pkg) {
             const input = document.getElementById('selectedPackage');
             if(input) input.value = pkg;
 
-            // Remove selected class from all
             document.querySelectorAll('.package-option').forEach(el => el.classList.remove('selected'));
-
-            // Add selected class to clicked
             const selected = document.getElementById('opt-' + pkg);
             if(selected) selected.classList.add('selected');
         }
 
         $(document).ready(function() {
-            // Form Submission Logic
-            $('#registerForm').submit(function(e) {
+            const alertBox = $('#formAlert');
+            const btn = $('#submitBtn');
+
+            function showError(htmlContent) {
+                alertBox.html(htmlContent).slideDown();
+                btn.prop('disabled', false).text('Create Account');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            $('#registerForm').submit(async function(e) {
                 e.preventDefault();
-                
-                const btn = $('#submitBtn');
-                const errorAlert = $('#errorAlert');
+                alertBox.slideUp();
+                btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Verifying...');
 
-                // Loading state
-                btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Creating Account...');
-                errorAlert.slideUp();
+                const fullName = $('#fullName').val().trim();
+                const email = $('#email').val().trim();
+                const password = $('#password').val();
+                const code = $('#accessCode').val().trim();
+                const pkg = $('#selectedPackage').val();
 
-                // 3 Seconds Delay simulation
-                setTimeout(function() {
-                    // Scroll to top
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    
-                    // Show error
-                    errorAlert.slideDown();
-                    
-                    // Reset button
-                    btn.prop('disabled', false).text('Create Account');
+                try {
+                    // 1. Verify Access Code
+                    const codeRef = doc(db, "access_codes", code);
+                    const codeSnap = await getDoc(codeRef);
 
-                }, 3000);
+                    if (!codeSnap.exists()) {
+                        showError(`
+                            <div class="d-flex flex-column align-items-center">
+                                <strong style="font-size:1.1rem; margin-bottom:5px;">Invalid Access Code</strong>
+                                <span class="my-2 text-center" style="opacity:0.9;">The access code you entered is invalid or it has been used, you can purchase a valid code from a merchant.</span>
+                                <a href="merchants.html" class="btn btn-light btn-sm mt-2 fw-bold text-danger">Buy Access Code</a>
+                            </div>
+                        `);
+                        return;
+                    }
+
+                    if (codeSnap.data().used) {
+                        showError(`
+                            <div class="d-flex flex-column align-items-center">
+                                <strong style="font-size:1.1rem; margin-bottom:5px;">Invalid Access Code</strong>
+                                <span class="my-2 text-center" style="opacity:0.9;">The access code you entered is invalid or it has been used, you can purchase a valid code from a merchant.</span>
+                                <a href="merchants.html" class="btn btn-light btn-sm mt-2 fw-bold text-danger">Buy Access Code</a>
+                            </div>
+                        `);
+                        return;
+                    }
+
+                    // 2. Create Authentication User
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+
+                    // 3. Create User Profile in Firestore
+                    await setDoc(doc(db, "users", user.uid), {
+                        fullName: fullName,
+                        email: email,
+                        accessCode: code,
+                        package: pkg,
+                        createdAt: new Date(),
+                        role: "user"
+                    });
+
+                    // 4. Mark Code as Used
+                    await setDoc(codeRef, { used: true, usedBy: user.uid, usedAt: new Date() }, { merge: true });
+
+                    // 5. Success - Redirect
+                    window.location.href = "index.html";
+
+                } catch (error) {
+                    console.error("Registration Error:", error);
+                    let msg = "An error occurred. Please try again.";
+                    if(error.code === 'auth/email-already-in-use') msg = "This email is already registered. Please <a href='login.html'>Log In</a>.";
+                    if(error.code === 'auth/weak-password') msg = "Password should be at least 6 characters.";
+                    showError(msg);
+                }
             });
         });
     </script>
